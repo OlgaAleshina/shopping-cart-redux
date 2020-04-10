@@ -1,25 +1,39 @@
 import React, { Component } from "react";
-import { ListGroup, Button } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { connect } from "react-redux";
 
 class ShoppingCart extends Component {
     render() {
-        const items = this.props.itemsInCart;
+        const item = this.props.itemsInCart;
 
         return (
             <>
-                <ListGroup horizontal >
-                    <ListGroup.Item>Name</ListGroup.Item>
-                    <ListGroup.Item>Price</ListGroup.Item>
-                    <ListGroup.Item>Total</ListGroup.Item>
-                </ListGroup>
-                <ListGroup horizontal id={1}>
-                    <ListGroup.Item>{items.name}</ListGroup.Item>
-                    <ListGroup.Item>{items.price}</ListGroup.Item>
-                    <ListGroup.Item>{items.quantity}</ListGroup.Item>
-                    <Button variant="danger"> - </Button>
-                </ListGroup>
-                <Button variant="danger">Clear the cart</Button>
+                <h4 className="text-center">Your Purchase</h4>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{item.id}</td>
+                            <td>{item.name}</td>
+                            <td>{item.price} RUB</td>
+                            <td>{item.quantity} </td>
+                            <td>
+                                {item.quantity} <Button variant="danger"> X </Button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table>
+                <Button className="m-auto" variant="danger">
+                    Clear the cart
+        </Button>
             </>
         );
     }

@@ -1,30 +1,48 @@
 import React, { Component } from "react";
-import { ListGroup, Button } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 
 class ShoppingList extends Component {
+    addOne = () => {
+        this.props.dispatch({ type: "ADD_ONE" });
+    };
+    minusOne = () => {
+        this.props.dispatch({ type: "MINUS_ONE" });
+    };
+
     render() {
         const items = this.props.items.map((item, index) => (
-            <ListGroup horizontal id={index}>
-                <ListGroup.Item>{item.name}</ListGroup.Item>
-                <ListGroup.Item>{item.price} RUB</ListGroup.Item>
-                <ListGroup.Item>{item.unit} </ListGroup.Item>
-                <Button variant="success"> + </Button>
-                <ListGroup.Item>{item.quantity}</ListGroup.Item>
-                <Button variant="danger"> - </Button>
-            </ListGroup>
+            <tr id={index}>
+                <td>{index}</td>
+                <td>{item.name}</td>
+                <td>{item.price} RUB</td>
+                <td>{item.unit}</td>
+                <td>
+                    <Button onClick={this.addOne} variant="danger">
+                        -
+          </Button>
+                    {item.quantity}
+                    <Button onClick={this.minusOne} variant="success">
+                        +
+          </Button>
+                </td>
+            </tr>
         ));
 
         return (
-            <>
-                <ListGroup horizontal>
-                    <ListGroup.Item>Name</ListGroup.Item>
-                    <ListGroup.Item>Price</ListGroup.Item>
-                    <ListGroup.Item>Unit</ListGroup.Item>
-                    <ListGroup.Item>Total</ListGroup.Item>
-                </ListGroup>
-                {items}
-            </>
+            <Table striped bordered hover>
+                <thead>
+                    <tr id={"list"}>
+                        <th>#</th>
+                        <th> Name</th>
+                        <th>Price</th>
+                        <th>Unit</th>
+                        <th>Total</th>
+                    </tr>
+                    {items}
+                </thead>
+                <tbody />
+            </Table>
         );
     }
 }
