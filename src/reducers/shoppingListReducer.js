@@ -1,4 +1,4 @@
-import { SHOW_SHOPPING_LIST } from "../actions";
+import { SHOW_SHOPPING_LIST } from "../actions/actions";
 
 function visibileShoppingList(visibility = SHOW_SHOPPING_LIST, action) {
     switch (action.type) {

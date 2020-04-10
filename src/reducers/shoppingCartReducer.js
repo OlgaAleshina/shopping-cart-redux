@@ -1,4 +1,4 @@
-import { SHOW_CART } from "../actions";
+import { SHOW_CART } from "../actions/actions";
 
 function visibileCart(visibility = SHOW_CART, action) {
     switch (action.type) {

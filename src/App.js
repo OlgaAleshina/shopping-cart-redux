@@ -1,5 +1,5 @@
 import React from "react";
-import ShoppingList from "./pages/shoppingList";
+import ShoppingList from "./components/shoppingList";
 import { Container } from "react-bootstrap"
 //import ShoppingCart from "./pages/shoppingCart";
 import 'bootstrap/dist/css/bootstrap.min.css';

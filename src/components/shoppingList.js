@@ -11,18 +11,18 @@ class ShoppingList extends Component {
     };
 
     render() {
-        const items = this.props.items.map((item, index) => (
-            <tr id={index}>
-                <td>{index}</td>
+        const items = this.props.items.map((item) => (
+            <tr id={item.id}>
+                <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>{item.price} RUB</td>
                 <td>{item.unit}</td>
                 <td>
-                    <Button onClick={this.addOne} variant="danger">
+                    <Button onClick={this.minusOne} variant="danger">
                         -
           </Button>
                     {item.quantity}
-                    <Button onClick={this.minusOne} variant="success">
+                    <Button onClick={this.addOne} variant="success">
                         +
           </Button>
                 </td>
