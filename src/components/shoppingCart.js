@@ -3,8 +3,19 @@ import { Button, Table } from "react-bootstrap";
 import { connect } from "react-redux";
 
 class ShoppingCart extends Component {
+
     render() {
-        const item = this.props.itemsInCart;
+        let itemsInCart = this.props.itemsInCart.map(item => (
+            <tr>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>{item.price} RUB</td>
+                <td>{item.quantity} </td>
+                <td>
+                    {item.quantity} RUB <Button variant="danger"> X </Button>
+                </td>
+            </tr>
+        ))
 
         return (
             <>
@@ -16,19 +27,11 @@ class ShoppingCart extends Component {
                             <th>Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
-                            <th>Total</th>
+                            <th>SubTotal</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{item.id}</td>
-                            <td>{item.name}</td>
-                            <td>{item.price} RUB</td>
-                            <td>{item.quantity} </td>
-                            <td>
-                                {item.quantity} <Button variant="danger"> X </Button>
-                            </td>
-                        </tr>
+                        {itemsInCart}
                     </tbody>
                 </Table>
                 <Button className="m-auto" variant="danger">

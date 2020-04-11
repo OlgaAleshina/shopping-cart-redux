@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
 import { connect } from "react-redux";
+import { addToCart } from "../actions/actions"
 
 class ShoppingList extends Component {
-    addOne = () => {
-        this.props.dispatch({ type: "ADD_ONE" });
+    handleClick = (id) => {
+        this.props.addToCart(id);
     };
-    minusOne = () => {
-        this.props.dispatch({ type: "MINUS_ONE" });
-    };
+
 
     render() {
         const items = this.props.items.map((item) => (
@@ -18,11 +17,9 @@ class ShoppingList extends Component {
                 <td>{item.price} RUB</td>
                 <td>{item.unit}</td>
                 <td>
-                    <Button onClick={this.minusOne} variant="danger">
-                        -
-          </Button>
+
                     {item.quantity}
-                    <Button onClick={this.addOne} variant="success">
+                    <Button onClick={() => { this.handleClick(item.id) }} variant="success">
                         +
           </Button>
                 </td>
@@ -53,4 +50,11 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(ShoppingList);
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+        addToCart: (id) => { dispatch(addToCart(id)) }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingList);
