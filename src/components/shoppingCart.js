@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { Button, Table } from "react-bootstrap";
 import { connect } from "react-redux";
+import { deleteFromCart } from "../actions/actions";
 
 class ShoppingCart extends Component {
 
+    handleclick = (id) => this.props.deleteFromCart(id);
+
     render() {
+        let total = this.props.total;
         let itemsInCart = this.props.itemsInCart.map(item => (
             <tr>
                 <td>{item.id}</td>
@@ -12,7 +16,7 @@ class ShoppingCart extends Component {
                 <td>{item.price} RUB</td>
                 <td>{item.quantity} </td>
                 <td>
-                    {item.quantity} RUB <Button variant="danger"> X </Button>
+                    {item.subtotal} RUB <Button onClick={() => { this.handleclick(item.id) }} variant="danger"> X </Button>
                 </td>
             </tr>
         ))
@@ -32,8 +36,14 @@ class ShoppingCart extends Component {
                     </thead>
                     <tbody>
                         {itemsInCart}
+                        <tr>
+                            <td colSpan="4" className="text-right">TOTAL</td>
+                            <td>{total} RUB</td>
+                        </tr>
+
                     </tbody>
                 </Table>
+
                 <Button className="m-auto" variant="danger">
                     Clear the cart
         </Button>
@@ -44,8 +54,16 @@ class ShoppingCart extends Component {
 
 const mapStateToProps = state => {
     return {
-        itemsInCart: state.itemsInCart
+        itemsInCart: state.itemsInCart,
+        total: state.total
     };
 };
 
-export default connect(mapStateToProps)(ShoppingCart);
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+        deleteFromCart: (id) => { dispatch(deleteFromCart(id)) }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);

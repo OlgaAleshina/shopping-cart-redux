@@ -4,9 +4,7 @@ import { connect } from "react-redux";
 import { addToCart } from "../actions/actions"
 
 class ShoppingList extends Component {
-    handleClick = (id) => {
-        this.props.addToCart(id);
-    };
+    handleClick = (id) => this.props.addToCart(id);
 
 
     render() {

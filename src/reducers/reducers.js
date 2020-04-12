@@ -1,4 +1,4 @@
-import { ADD_ONE, MINUS_ONE, ADD_TO_CART } from "../actions/actions";
+import { ADD_TO_CART, DELETE_ITEM_FROM_CART } from "../actions/actions";
 
 const initialState = {
     items: [
@@ -8,28 +8,46 @@ const initialState = {
         { id: 4, name: "milk", price: 75, unit: "liter", quantity: 0, inStock: 5 }
     ],
     itemsInCart: [],
+    total: 0
 };
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
 
         case ADD_TO_CART:
-            let addedItem = state.items.find(item => item.id === action.id)
+            let addedItem = state.items.find(item => item.id === action.id);
+            let existedItem = state.itemsInCart.find(item => item.id === action.id);
+
+
+            if (existedItem) {
+                existedItem.quantity += 1;
+                existedItem.subtotal = existedItem.price * existedItem.quantity;
+                return {
+                    ...state,
+                    total: state.total + addedItem.price,
+
+                }
+            } else {
+                addedItem.quantity = 1;
+                addedItem.subtotal = addedItem.price * addedItem.quantity;
+                return {
+                    ...state,
+                    itemsInCart: [...state.itemsInCart, addedItem],
+                    total: state.total + addedItem.price,
+                }
+            }
+            ;
+        case DELETE_ITEM_FROM_CART:
+            let filteredCart = state.itemsInCart.filter(item => action.id !== item.id);
+            let removedItem = state.itemsInCart.find(item => action.id === item.id);
+            let updatedTotal = state.total - removedItem.subtotal;
             return {
                 ...state,
-                itemsInCart: [...state.itemsInCart, addedItem],
+                itemsInCart: filteredCart,
+                total: updatedTotal
             };
 
 
-        case ADD_ONE:
-            return {
-                number: state.number + 1
-            };
-
-        case MINUS_ONE:
-            return {
-                quantity: state.items.quantity - 1
-            };
         default:
             return state;
     }
