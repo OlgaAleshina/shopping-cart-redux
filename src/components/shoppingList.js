@@ -1,25 +1,27 @@
 import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { addToCart } from "../actions/actions"
+import { addToCart, substractOneFromCart } from "../actions/actions"
 
 class ShoppingList extends Component {
-    handleClick = (id) => this.props.addToCart(id);
-
+    handleAdd = (id) => this.props.addToCart(id);
+    handleSubstract = (id) => this.props.substractOneFromCart(id);
 
     render() {
-        const items = this.props.items.map((item) => (
+        let items = this.props.items.map((item) => (
             <tr id={item.id}>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>{item.price} RUB</td>
                 <td>{item.unit}</td>
                 <td>
-
-                    {item.quantity}
-                    <Button onClick={() => { this.handleClick(item.id) }} variant="success">
-                        +
-          </Button>
+                    <Button onClick={() => { this.handleSubstract(item.id) }} variant="secondary">-</Button>
+                    <Button onClick={() => { this.handleAdd(item.id) }} variant="success">+</Button>
+                    <Button
+                        onClick={() => { this.handleAdd(item.id) }}
+                        disabled={item.inStock > 0 ? '' : 'disabled'}>
+                        {item.inStock > 0 ? 'Add to cart' : 'Sold Out'}
+                    </Button>
                 </td>
             </tr>
         ));
@@ -35,6 +37,7 @@ class ShoppingList extends Component {
                         <th>Total</th>
                     </tr>
                     {items}
+
                 </thead>
                 <tbody />
             </Table>
@@ -51,7 +54,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
 
     return {
-        addToCart: (id) => { dispatch(addToCart(id)) }
+        addToCart: (id) => { dispatch(addToCart(id)) },
+        substractOneFromCart: (id) => { dispatch(substractOneFromCart(id)) }
     }
 }
 

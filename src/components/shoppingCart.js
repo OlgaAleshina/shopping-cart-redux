@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Button, Table } from "react-bootstrap";
 import { connect } from "react-redux";
-import { deleteFromCart } from "../actions/actions";
+import { deleteFromCart, clearCart } from "../actions/actions";
 
 class ShoppingCart extends Component {
 
-    handleclick = (id) => this.props.deleteFromCart(id);
+    handleDelete = id => this.props.deleteFromCart(id);
+    handleClearCart = () => this.props.clearCart();
 
     render() {
         let total = this.props.total;
@@ -16,7 +17,7 @@ class ShoppingCart extends Component {
                 <td>{item.price} RUB</td>
                 <td>{item.quantity} </td>
                 <td>
-                    {item.subtotal} RUB <Button onClick={() => { this.handleclick(item.id) }} variant="danger"> X </Button>
+                    {item.subtotal} RUB <Button onClick={() => { this.handleDelete(item.id) }} variant="danger"> X </Button>
                 </td>
             </tr>
         ))
@@ -44,7 +45,7 @@ class ShoppingCart extends Component {
                     </tbody>
                 </Table>
 
-                <Button className="m-auto" variant="danger">
+                <Button className="m-auto" variant="danger" onClick={() => { this.handleClearCart(); }}>
                     Clear the cart
         </Button>
             </>
@@ -62,7 +63,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
 
     return {
-        deleteFromCart: (id) => { dispatch(deleteFromCart(id)) }
+        deleteFromCart: (id) => { dispatch(deleteFromCart(id)) },
+        clearCart: () => {
+            dispatch(clearCart());
+        }
     }
 }
 

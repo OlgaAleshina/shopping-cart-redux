@@ -1,7 +1,3 @@
-export const MINUS_ONE = "MINUS_ONE";
-
-export const CLEAR_CART = "CLEAR CART";
-
 
 export const ADD_TO_CART = "ADD_TO_CART";
 export const addToCart = (id) => {
@@ -11,6 +7,15 @@ export const addToCart = (id) => {
     }
 }
 
+export const SUBSTRACT_ONE = "SUBSTRACT_ONE";
+export const substractOneFromCart = (id) => {
+    return {
+        type: SUBSTRACT_ONE,
+        id
+    }
+}
+
+
 export const DELETE_ITEM_FROM_CART = "DELETE_ITEM_FROM_CART";
 export const deleteFromCart = (id) => {
     return {
@@ -18,3 +23,10 @@ export const deleteFromCart = (id) => {
         id
     }
 }
+
+export const CLEAR_CART = "CLEAR CART";
+export const clearCart = () => {
+    return {
+        type: CLEAR_CART
+    };
+};
