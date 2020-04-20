@@ -7,6 +7,7 @@ export const addToCart = (id) => {
     }
 }
 
+
 export const SUBSTRACT_ONE = "SUBSTRACT_ONE";
 export const substractOneFromCart = (id) => {
     return {
@@ -24,7 +25,7 @@ export const deleteFromCart = (id) => {
     }
 }
 
-export const CLEAR_CART = "CLEAR CART";
+export const CLEAR_CART = "CLEAR_CART";
 export const clearCart = () => {
     return {
         type: CLEAR_CART
