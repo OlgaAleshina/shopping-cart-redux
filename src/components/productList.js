@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { SUBSTRACT_ONE, ADD_TO_CART } from "../actions/actions";
 
 const ProductList = () => {
-    const items = useSelector(state => state.productListReducer);
+    const items = useSelector(state => state.items);
     const dispatch = useDispatch();
 
     const itemsInList = items.map(item => (

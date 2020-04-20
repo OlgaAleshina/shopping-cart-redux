@@ -4,14 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { DELETE_ITEM_FROM_CART, CLEAR_CART } from "../actions/actions";
 
 const ShoppingCart = () => {
-    const itemsInCart = useSelector(state => state.shoppingCartReducer);
+    const itemsInCart = useSelector(state => state.itemsInCart);
     const total = useSelector(state => state.total);
     const dispatch = useDispatch();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let itemsInCartList = itemsInCart ? "" : itemsInCart.map(item => (
+    let itemsInCartList = itemsInCart.map(item => (
         <tr>
             <td>{item.id}</td>
             <td>{item.name}</td>
