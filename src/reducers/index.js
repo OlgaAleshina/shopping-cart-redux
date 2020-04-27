@@ -1,5 +1,12 @@
-import { createStore } from "redux";
-import rootReducer from "./rootReducer";
+import { createStore, combineReducers } from "redux";
+//import rootReducer from "./rootReducer";
+import productsReducer from "./productsReducer";
+import cartReducer from "./cartReducer";
 
-const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const reducer = combineReducers({
+    products: productsReducer,
+    itemsInCart: cartReducer,
+});
+
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 export default store;

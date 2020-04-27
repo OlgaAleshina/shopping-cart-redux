@@ -1,16 +1,16 @@
 import React from "react";
-import ProductList from "./components/productList";
+import Products from "./containers/products";
 import { Container } from "react-bootstrap"
-import ShoppingCart from "./components/shoppingCart";
+import Cart from "./containers/cart";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
   return (
     <Container>
       <h1 className="text-center">Shopping Cart React-Redux</h1>
-      <ProductList />
+      <Products />
       <hr />
-      <ShoppingCart />
+      <Cart />
     </Container>
   );
 }

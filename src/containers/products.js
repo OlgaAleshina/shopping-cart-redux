@@ -1,29 +1,36 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { SUBSTRACT_ONE, ADD_TO_CART } from "../actions/actions";
+import getProducts from "../reducers/rootReducer"
+
 
 const ProductList = () => {
-    const items = useSelector(state => state.items);
+    const products = useSelector(state => state.products.products);
     const dispatch = useDispatch();
 
-    const itemsInList = items.map(item => (
+    const productsList = products.map(item => (
         <tr id={item.id}>
             <td>{item.id}</td>
             <td>{item.name}</td>
             <td>{item.price} RUB</td>
             <td>{item.unit}</td>
             <td>
-                {item.quantity}
+
                 <Button
+                    className="m-1"
                     onClick={() => dispatch({ type: "SUBSTRACT_ONE", id: item.id })}
-                    //disabled={item.quantity > 0 ? "" : "disabled"}
+                    disabled={item.quantity > 0 ? "" : "disabled"}
                     variant="secondary"
                 >
                     -
         </Button>
+                <Button variant="outline-secondary">{item.quantity}</Button>
                 <Button
-                    onClick={() => dispatch({ type: "ADD_TO_CART", id: item.id })}
+                    className="m-1"
+                    onClick={() => {
+                        dispatch({ type: "ADD_TO_CART", id: item.id });
+                        dispatch({ type: "COUNT_TOTAL" });
+                    }}
                     disabled={item.inStock > 0 ? "" : "disabled"}
                     variant="success"
                 >
@@ -45,7 +52,7 @@ const ProductList = () => {
                     <th>Unit</th>
                     <th>Total</th>
                 </tr>
-                {itemsInList}
+                {productsList}
             </thead>
             <tbody />
         </Table>

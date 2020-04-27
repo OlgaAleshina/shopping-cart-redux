@@ -18,24 +18,28 @@ function rootReducer(state = initialState, action) {
     switch (action.type) {
 
         case ADD_TO_CART:
-            return Object.assign({}, state, {
+            if (state.itemsInCart.indexOf(action.id) !== -1) {
+                return state
+            }
 
+            return Object.assign({}, state, {
                 itemsInCart: [...state.itemsInCart, state.items.find(item => item.id === action.id)],
-                total: state.total + state.items[action.id - 1].price
             });
 
 
         case SUBSTRACT_ONE:
+            //return state.items[action.id].inStock -= 1
             ;
 
         case DELETE_ITEM_FROM_CART:
             return Object.assign({}, state, {
-
                 itemsInCart: state.itemsInCart.filter(item => item.id !== action.id)
             });
 
         case CLEAR_CART:
-            ;
+            return Object.assign({}, state, {
+                itemsInCart: [],
+            });
 
         default:
             return state;
@@ -43,8 +47,24 @@ function rootReducer(state = initialState, action) {
 }
 
 
+//selectors
+export function getProducts(state) {
+    return state.items;
+}
+export function getCartList(state) {
+    return state.itemsInCart;
+}
 
+export function substractFromStock(item) {
+    return item.inStock - 1;
+}
 
+export function getSubtotal(item, id) {
+    return item[id].price * item[id].quantity;
+}
+export function getTotal(item) {
+    return item.reduce((a, b) => a + b);
+}
 
 
 export default rootReducer;
