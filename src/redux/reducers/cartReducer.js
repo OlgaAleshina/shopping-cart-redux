@@ -5,23 +5,24 @@ import {
 } from "../actions/actions";
 
 
-function cartReducer(state = [], action) {
+function cartReducer(cart = [], action) {
 
     switch (action.type) {
         case ADD_TO_CART:
-            return [...state, action.product];
+            let newCart = cart.slice()
+            newCart.splice(action.id, 0, action.product)
+            return newCart
+
 
 
         case DELETE_ITEM_FROM_CART:
-            return state.filter(item => item.id !== action.id);
+            return cart.filter(item => item.id !== action.id);
 
         case CLEAR_CART:
-            return Object.assign({}, state, {
-                itemsInCart: []
-            });
+            return cart.splice();
 
         default:
-            return state;
+            return cart;
     }
 }
 

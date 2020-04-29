@@ -1,18 +1,22 @@
-import { ADD_TO_CART, SUBSTRACT_ONE } from "../actions/actions";
+import { ADD_TO_CART, SUBSTRACT_ONE, CLEAR_CART } from "../actions/actions";
 
 function productsReducer(products = [], action) {
     let product = products.find(item => item.id === action.id);
+    let updatedProducts = products.slice();
 
     switch (action.type) {
         case ADD_TO_CART:
             product.quantity += 1;
             product.inStock -= 1;
-            return [...products];
+            return updatedProducts;
 
         case SUBSTRACT_ONE:
             product.quantity -= 1;
             product.inStock += 1;
             return [...products];
+
+        case CLEAR_CART:
+            return products;
 
         default:
             return products;
