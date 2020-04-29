@@ -5,32 +5,30 @@ import ConfirmModal from "../components/confirmModal";
 
 
 const ShoppingCart = () => {
-    const itemsInCart = useSelector(state => state.itemsInCart);
+    const itemsInCart = useSelector(state => state.cart);
     const total = useSelector(state => state.total);
     const dispatch = useDispatch();
     const [showConfirmation, setShowConfirmation] = useState(false);
 
 
-    let itemsInCartList = []
-        ? ""
-        : itemsInCart.map(item => (
-            <tr>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.price} RUB</td>
-                <td>{item.quantity} </td>
-                <td>
-                    {item.subtotal} RUB{" "}
-                    <Button
-                        onClick={() => dispatch({ type: "DELETE_ITEM_FROM_CART", id: item.id })}
-                        variant="danger"
-                    >
-                        X
+    let itemsInCartList = itemsInCart.map(item => (
+        <tr>
+            <td>{item.id}</td>
+            <td>{item.name}</td>
+            <td>{item.price} RUB</td>
+            <td>{item.quantity} </td>
+            <td>
+                {item.subtotal} RUB{" "}
+                <Button
+                    onClick={() => dispatch({ type: "DELETE_ITEM_FROM_CART", id: item.id })}
+                    variant="danger"
+                >
+                    X
         </Button>
-                </td>
-                <td>{item.inStock} left </td>
-            </tr>
-        ));
+            </td>
+            <td>{item.inStock} left </td>
+        </tr>
+    ));
 
     return (
         <>
