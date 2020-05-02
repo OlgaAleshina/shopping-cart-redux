@@ -18,7 +18,7 @@ const ShoppingCart = () => {
             <td>{item.price} RUB</td>
             <td>{item.quantity} </td>
             <td>
-                {item.price * item.quantity} RUB{" "}
+                {item.subtotal} RUB
                 <Button
                     onClick={() => dispatch({ type: "DELETE_ITEM_FROM_CART", id: item.id })}
                     variant="danger"
