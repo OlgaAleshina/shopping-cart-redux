@@ -25,9 +25,16 @@ function productsReducer(products = [], action) {
 
         case SUBSTRACT_ONE:
 
-            product.quantity -= 1;
-            product.inStock += 1;
-            return updatedProducts;
+            products.map((item) => {
+                if (item.id === action.id) {
+                    return {
+                        ...item,
+                        quantity: products[action.id].quantity - 1,
+                        inStock: products[action.id].inStock + 1
+                    }
+                }
+                return item
+            });
 
         case DELETE_ITEM_FROM_CART:
             return products.map((item) => {
@@ -42,7 +49,7 @@ function productsReducer(products = [], action) {
             });
 
         case CLEAR_CART:
-            return products.slice();
+            return products;
 
         default:
             return products;
@@ -50,16 +57,7 @@ function productsReducer(products = [], action) {
 }
 
 //selectors
-/*export function getProducts(state) {
-    return state.items;
-}
-export function getCartList(state) {
-    return state.itemsInCart;
-}
-
-export function substractFromStock(item) {
-    return item.inStock - 1;
-}
+/*
 
 export function getSubtotal(item, id) {
     return item[id].price * item[id].quantity;

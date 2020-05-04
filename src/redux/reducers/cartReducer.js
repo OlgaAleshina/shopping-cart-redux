@@ -6,27 +6,27 @@ import {
 
 
 function cartReducer(cart = [], action) {
-    const newCart = cart.slice();
+
     switch (action.type) {
         case ADD_TO_CART:
+            //const isInCart = cart.includes(action.id);
+            const isInCart = cart.find(item => item.id === action.id);
 
-
-            /*return cart.map((item, index) => {
-                // Find the item with the matching id
-                if (item.id === action.id) {
-                    // Return a new object
-                    return {
-                        ...item,  // copy the existing item
-                        quantity: action.product.quantity + 1,
-                          // replace the email addr
+            if (!isInCart) {
+                return [...cart, action.product]
+            } else {
+                return cart.map((item) => {
+                    if (item.id === action.id) {
+                        return {
+                            ...item,
+                            quantity: action.product.quantity + 1,
+                            inStock: action.product.inStock - 1
+                        }
                     }
-                }
-    
-                // Leave every other item unchanged
-                return item;
-            });*/
-            newCart.splice(action.id - 1, 0, action.product)
-            return newCart;
+                    return item;
+                });
+            }
+
 
         case SUBSTRACT_ONE:
             return cart;
@@ -36,6 +36,7 @@ function cartReducer(cart = [], action) {
             return cart.filter(item => item.id !== action.id);
 
         case CLEAR_CART:
+            const newCart = cart.slice();
             return newCart.splice();
 
         default:
