@@ -2,8 +2,8 @@ import { ADD_TO_CART, SUBSTRACT_ONE, CLEAR_CART, DELETE_ITEM_FROM_CART } from ".
 
 function productsReducer(products = [], action) {
 
-    let updatedProducts = products.slice();
-    let product = updatedProducts.find(item => item.id === action.id);
+    //let updatedProducts = products.slice();
+    //let product = updatedProducts.find(item => item.id === action.id);
 
     switch (action.type) {
         case ADD_TO_CART:
@@ -19,18 +19,15 @@ function productsReducer(products = [], action) {
                 return item;
             });
 
-        // product.quantity += 1;
-        // product.inStock -= 1;
-        // return updatedProducts;
 
         case SUBSTRACT_ONE:
 
-            products.map((item) => {
+            return products.map((item) => {
                 if (item.id === action.id) {
                     return {
                         ...item,
-                        quantity: products[action.id].quantity - 1,
-                        inStock: products[action.id].inStock + 1
+                        quantity: products[action.id - 1].quantity - 1,
+                        inStock: products[action.id - 1].inStock + 1
                     }
                 }
                 return item
@@ -49,7 +46,7 @@ function productsReducer(products = [], action) {
             });
 
         case CLEAR_CART:
-            return products;
+            return products.slice();
 
         default:
             return products;

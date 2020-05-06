@@ -6,21 +6,23 @@ import {
 
 
 function cartReducer(cart = [], action) {
+    const productInCart = cart.find(item => item.id === action.id);
+    const { product } = action;
 
     switch (action.type) {
-        case ADD_TO_CART:
-            //const isInCart = cart.includes(action.id);
-            const isInCart = cart.find(item => item.id === action.id);
 
-            if (!isInCart) {
-                return [...cart, action.product]
+        case ADD_TO_CART:
+
+            product.quantity = 1;
+            if (!productInCart) {
+                return [...cart, product]
             } else {
                 return cart.map((item) => {
                     if (item.id === action.id) {
                         return {
                             ...item,
-                            quantity: action.product.quantity + 1,
-                            inStock: action.product.inStock - 1
+                            quantity: product.quantity + 1,
+                            inStock: product.inStock - 1
                         }
                     }
                     return item;
@@ -29,7 +31,21 @@ function cartReducer(cart = [], action) {
 
 
         case SUBSTRACT_ONE:
-            return cart;
+
+            if (productInCart.quantity === 1) {
+                return cart.filter(item => item.id !== action.id);
+            } else {
+                return cart.map((item) => {
+                    if (item.id === action.id) {
+                        return {
+                            ...item,
+                            quantity: productInCart.quantity - 1,
+                            inStock: productInCart.inStock + 1
+                        }
+                    }
+                    return item;
+                });
+            }
 
 
         case DELETE_ITEM_FROM_CART:
